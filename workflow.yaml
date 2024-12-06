@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: simple-js-project-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+  annotations:
+    workflows.argoproj.io/description: |
+      This workflow runs a JavaScript project in a Node.js container.
+spec:
+  entrypoint: run-js-project
+  templates:
+    - name: run-js-project
+      container:
+        image: node:18-alpine # Node.js container image
+        command: ["node"]
+        args: ["index.js"] # Run the index.js file from the root directory
+        volumeMounts:
+          - name: project-files
+            mountPath: /usr/src/app # Mount the Git repository to /usr/src/app
+        workingDir: /usr/src/app # Set the working directory to /usr/src/app to run the code from there
+  volumes:
+    - name: project-files
+      gitRepo:
+        repository: https://github.com/qingzhang100/argo_code_example.git # GitHub repository with your project
+        revision: master # Specify branch (e.g., "master" or "main")
+        directory: "." # Ensure it clones the root of the repository where index.js is located
