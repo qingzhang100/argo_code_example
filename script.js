@@ -1,8 +1,21 @@
-const dropDownArrows = document.querySelectorAll(".drop-down-arrow");
-const paragraphs = document.querySelectorAll(".paragraph1");
+// A simple greeting function
+function greet() {
+  console.log("Hello, Argo Workflows! 🌟");
+  console.log("This is a simple JavaScript script running in a container.");
+}
 
-dropDownArrows.forEach((arrow, index) => {
-  arrow.addEventListener("click", function () {
-    paragraphs[index].classList.toggle("hide");
-  });
-});
+// A function to show the current date and time
+function showDateTime() {
+  const now = new Date();
+  console.log(`Current Date and Time: ${now.toString()}`);
+}
+
+// Main function to execute the script
+function main() {
+  greet();
+  showDateTime();
+  console.log("Task completed successfully. 🎉");
+}
+
+// Run the main function
+main();
