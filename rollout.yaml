@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: simple-js-project
+spec:
+  replicas: 1
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause: { duration: "10s" }
+        - setWeight: 100
+  selector:
+    matchLabels:
+      app: simple-js-project
+  template:
+    metadata:
+      labels:
+        app: simple-js-project
+    spec:
+      containers:
+        - name: node-container
+          image: node:18-alpine # Replace with your own image if necessary
+          command: ["node", "/usr/src/app/index.js"]
+          volumeMounts:
+            - name: project-files
+              mountPath: /usr/src/app
+      volumes:
+        - name: project-files
+          gitRepo:
+            repository: https://github.com/qingzhang100/argo_code_example.git
+            revision: master
+            directory: "."
