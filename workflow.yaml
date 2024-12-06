@@ -12,15 +12,15 @@ spec:
   templates:
     - name: run-js-project
       container:
-        image: node:18-alpine
+        image: node:18-alpine # Node.js container image
         command: ["node"]
-        args: ["index.js"]
+        args: ["/usr/src/app/index.js"] # Full path to index.js
         volumeMounts:
           - name: project-files
-            mountPath: /usr/src/app
-        workingDir: /usr/src/app
+            mountPath: /usr/src/app # Mount the Git repository to /usr/src/app
+        workingDir: /usr/src/app # Ensure the container's working directory is set correctly
   volumes:
     - name: project-files
       gitRepo:
-        # My repository
-        repository: https://github.com/qingzhang100/argo_code_example.git
+        repository: https://github.com/qingzhang100/argo_code_example.git # GitHub repository with your project
+        revision: master # Specify branch if needed (e.g., "master" or "main")
