@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-js-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-js-project
+  template:
+    metadata:
+      labels:
+        app: simple-js-project
+    spec:
+      containers:
+        - name: node-container
+          image: node:18-alpine
+          command: ["node", "/usr/src/app/index.js"]
+          volumeMounts:
+            - name: project-files
+              mountPath: /usr/src/app
+      volumes:
+        - name: project-files
+          gitRepo:
+            repository: https://github.com/qingzhang100/argo_code_example.git
+            revision: master
+            directory: "."
