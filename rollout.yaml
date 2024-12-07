@@ -1,9 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: simple-js-project
 spec:
   replicas: 1
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause: { duration: "10s" }
+        - setWeight: 100
   selector:
     matchLabels:
       app: simple-js-project
