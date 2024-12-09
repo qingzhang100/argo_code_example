@@ -26,7 +26,8 @@ spec:
       containers:
         - name: node-container
           image: node:18-alpine
-          command: ["node", "/usr/src/app/index.js"]
+          command:
+            ["sh", "-c", "node /usr/src/app/index.js && tail -f /dev/null"]
           volumeMounts:
             - name: project-files
               mountPath: /usr/src/app
