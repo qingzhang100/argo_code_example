@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: simple-rollout
+  name: rollouts-demo
 spec:
   replicas: 5
   strategy:
@@ -18,15 +18,15 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: simple-rollout
+      app: rollouts-demo
   template:
     metadata:
       labels:
-        app: simple-rollout
+        app: rollouts-demo
     spec:
       containers:
-        - name: simple-rollout
-          image: argoproj/simple-rollout:blue
+        - name: rollouts-demo
+          image: argoproj/rollouts-demo:blue
           ports:
             - name: http
               containerPort: 8080
